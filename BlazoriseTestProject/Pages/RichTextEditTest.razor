@@ -65,15 +65,7 @@
 
 @code {
     private RichTextEdit _RichTextEdit;
-    private string _MyContent;
     private string _NewContent;
-
-    protected async override Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-        await Task.Delay(1000);
-        _MyContent = "<p>Test</p>";
-    }
 
     private async Task ContentChanged()
     {
