@@ -1,0 +1,84 @@
+﻿@page "/RichTextEditTest"
+
+<h3>RichTextEditTest</h3>
+<RichTextEdit @ref="_RichTextEdit"
+              ContentChanged="@ContentChanged"
+              SubmitOnEnter="false">
+    <Editor>
+        <p>
+            Test
+        </p>
+    </Editor>
+    <Toolbar>
+        <RichTextEditToolbarGroup>
+            <RichTextEditToolbarButton Action="RichTextEditAction.Bold" />
+            <RichTextEditToolbarButton Action="RichTextEditAction.Italic" />
+            <RichTextEditToolbarButton Action="RichTextEditAction.Underline" />
+            <RichTextEditToolbarButton Action="RichTextEditAction.Strike" />
+            <RichTextEditToolbarButton Action="RichTextEditAction.Image" />
+            <RichTextEditToolbarButton Action="RichTextEditAction.Script" Value="sub" />
+            <RichTextEditToolbarButton Action="RichTextEditAction.Script" Value="super" />
+        </RichTextEditToolbarGroup>
+        <RichTextEditToolbarGroup>
+            <RichTextEditToolbarSelect Action="RichTextEditAction.Size">
+                <RichTextEditToolbarSelectItem Value="small" />
+                <RichTextEditToolbarSelectItem Selected="true" />
+                <RichTextEditToolbarSelectItem Value="large" />
+                <RichTextEditToolbarSelectItem Value="huge" />
+            </RichTextEditToolbarSelect>
+        </RichTextEditToolbarGroup>
+        <RichTextEditToolbarGroup>
+            <RichTextEditToolbarButton Action="RichTextEditAction.List" Value="ordered" />
+            <RichTextEditToolbarButton Action="RichTextEditAction.List" Value="bullet" />
+        </RichTextEditToolbarGroup>
+        <RichTextEditToolbarGroup>
+            <RichTextEditToolbarSelect Action="RichTextEditAction.Color">
+                <RichTextEditToolbarSelectItem Value="#000" Selected="true" />
+                <RichTextEditToolbarSelectItem Value="#FFF" />
+                <RichTextEditToolbarSelectItem Value="#F00" />
+                <RichTextEditToolbarSelectItem Value="#0F0" />
+                <RichTextEditToolbarSelectItem Value="#00F" />
+            </RichTextEditToolbarSelect>
+            <RichTextEditToolbarSelect Action="RichTextEditAction.Background">
+                <RichTextEditToolbarSelectItem Value="#000" />
+                <RichTextEditToolbarSelectItem Value="#FFF" Selected="true" />
+                <RichTextEditToolbarSelectItem Value="#F00" />
+                <RichTextEditToolbarSelectItem Value="#0F0" />
+                <RichTextEditToolbarSelectItem Value="#00F" />
+            </RichTextEditToolbarSelect>
+            <RichTextEditToolbarSelect Action="RichTextEditAction.Align">
+                <RichTextEditToolbarSelectItem Selected="true" />
+                <RichTextEditToolbarSelectItem Value="center" />
+                <RichTextEditToolbarSelectItem Value="right" />
+            </RichTextEditToolbarSelect>
+            <RichTextEditToolbarButton Action="RichTextEditAction.Indent" Value="+1" />
+            <RichTextEditToolbarButton Action="RichTextEditAction.Indent" Value="-1" />
+        </RichTextEditToolbarGroup>
+        <RichTextEditToolbarGroup>
+            <RichTextEditToolbarButton Action="RichTextEditAction.Link" />
+            <RichTextEditToolbarButton Action="RichTextEditAction.Clean" />
+        </RichTextEditToolbarGroup>
+    </Toolbar>
+</RichTextEdit>
+
+@_NewContent
+
+@code {
+    private RichTextEdit _RichTextEdit;
+    private string _MyContent;
+    private string _NewContent;
+
+    protected async override Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await Task.Delay(1000);
+        _MyContent = "<p>Test</p>";
+    }
+
+    private async Task ContentChanged()
+    {
+        if (_RichTextEdit == null)
+            return;
+        _NewContent = await _RichTextEdit.GetHtmlAsync();
+    }
+}
