@@ -30,14 +30,13 @@ namespace BlazoriseTestProject
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-
             services.AddBlazorise(options =>
             {
-                options.ChangeTextOnKeyPress = true;
-            });
-            services.AddBulmaProviders();
-            services.AddFontAwesomeIcons();
-            services.AddBlazoriseRichTextEdit();
+                options.Immediate = true;
+            })
+            .AddBulmaProviders()
+            .AddFontAwesomeIcons()
+            .AddBlazoriseRichTextEdit();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
